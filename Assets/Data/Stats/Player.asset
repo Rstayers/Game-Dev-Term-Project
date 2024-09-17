@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a379754df39894cbeade42aa84292d, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  maxHealth: 50
+  meleeAttackPower: 10
+  maxStamina: 10
+  maxMana: 10
+  onDeathParticles: {fileID: 0}
+  gravityMultiplier: 20
+  groundedThreshold: 0.3
+  maxHeightThreshold: 2.5
+  groundStickForce: 1
+  cliffDetectionDistance: 1.5
+  speed: 5
+  sprintSpeed: 7
+  dodgeDuration: 0.5
+  dodgeDistance: 4.5
+  invincibilityFrames: 0.25
+  dodgeVFX: {fileID: 8710760678652943860, guid: c1472788f4d17da4b980b43fc1f87dd5,
+    type: 3}
+  rotationSpeed: 15
+  maxSlopeAngle: 45
+  stepHeight: 0.3
