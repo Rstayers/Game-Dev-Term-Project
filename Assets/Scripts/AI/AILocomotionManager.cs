@@ -63,9 +63,8 @@ public class AILocomotionManager : MonoBehaviour
         while (!validPointFound)
         {
             Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
-            randomDirection.y = 0; // Ensure the movement is on the horizontal plane
+           
             Vector3 potentialPoint = originalPosition + randomDirection;
-
             // Check if the new point is within the original range
             if (Vector3.Distance(originalPosition, potentialPoint) <= originalRange)
             {
