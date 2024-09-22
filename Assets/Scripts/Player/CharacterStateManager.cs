@@ -47,6 +47,10 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     }
     public virtual void TakeDamage(int amount, GameObject originator)
     {
+        /*
+         * Called by an enemy
+         * Play animations and update stats
+         */
         if (isInvincible)
             return;
        

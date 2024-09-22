@@ -19,6 +19,9 @@ public class CharacterAnimatorManager : MonoBehaviour
 
     public void UpdateAnimatorValues(float verticalMovement,  float horizontalMovement)
     {
+        /*
+         * Update movement values for animator
+         */
         if(verticalMovement == 2) verticalMovement = 2;
         else if (verticalMovement > .7f) verticalMovement = 1;
         else if (verticalMovement < -.7f) verticalMovement = -1;

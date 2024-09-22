@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using Unity.VisualScripting;
 
 public class WorldManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField] LayerMask enviromentLayers;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask interactionLayers;
+    [Header("Camera")]
+    [SerializeField] CinemachineVirtualCamera cam;
     private void Awake()
     {
         if(Instance == null)
@@ -38,5 +42,9 @@ public class WorldManager : MonoBehaviour
     public LayerMask GetInteractionLayers()
     {
         return interactionLayers;
+    }
+    public CinemachineVirtualCamera GetCamera()
+    {
+        return cam;
     }
 }

@@ -78,6 +78,13 @@ public class CharacterCombatManager : MonoBehaviour
     #region Melee Attack
     public void HandleMelee(InputAction.CallbackContext ctx)
     {
+        /*
+         * 
+         * Handle Playing which Melee Attack animation to play
+         * (combo, regular, other, etc)
+         * 
+         */
+
         if (!ctx.performed || inFiringMode) return;
         if (canCombo && stateManager.isPerformingAction)
         {
@@ -96,10 +103,14 @@ public class CharacterCombatManager : MonoBehaviour
     }
     public void Attack()
     {
+        /*
+         *  Animation event that spawns an overlap sphere to see if we do damage
+         */
+
         Collider[] hits = Physics.OverlapSphere(meleeAttackPoint.position, meleeAttackRadius, WorldManager.Instance.GetAttackableLayer());
         foreach (Collider hit in hits)
         {
-
+            //see if it is dameagable
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
                 if (hit.gameObject.TryGetComponent(out CharacterStateManager manager))
@@ -145,6 +156,10 @@ public class CharacterCombatManager : MonoBehaviour
     }
     public void LockOnSelectionInput(InputAction.CallbackContext ctx)
     {
+        /*
+         *  Handle switching current lock on target
+         */
+
         if (!stateManager.isLockedOn)
             return;
         lockOnSelectionInput = ctx.ReadValue<Vector2>();
@@ -159,6 +174,9 @@ public class CharacterCombatManager : MonoBehaviour
     }
     public void HandleLockOnInput(InputAction.CallbackContext ctx)
     {
+        /*
+        *   Handle entering lock on mode
+        */
         if (ctx.canceled)
         {
             stateManager.isLockedOn = false;
@@ -176,23 +194,28 @@ public class CharacterCombatManager : MonoBehaviour
    
     public void HandleLockOnSelectionChanged()
     {
+        /*
+         *  Calculate which targets are to the left, right, above, and below
+         *  and assign new target based on input
+         */
+
         cameraManager.HandleLockOnTargets();
         CharacterStateManager newTarget = null;
-        if(lockOnSelectionInput.x < 0 && cameraManager.leftLockOnTarget != null)
+        if(lockOnSelectionInput.x < 0 && cameraManager.leftLockOnTarget != null)// left target
         {
             newTarget = cameraManager.leftLockOnTarget;
         }
-        else if(lockOnSelectionInput.x > 0 && cameraManager.rightLockOnTarget != null)
+        else if(lockOnSelectionInput.x > 0 && cameraManager.rightLockOnTarget != null)//right target
         {
             newTarget = cameraManager.rightLockOnTarget;
 
         }
-        else if (lockOnSelectionInput == Vector3.down && cameraManager.downLockOnTarget != null)
+        else if (lockOnSelectionInput == Vector3.down && cameraManager.downLockOnTarget != null)//down target
         {
             newTarget = cameraManager.downLockOnTarget;
 
         }
-        else if (lockOnSelectionInput == Vector3.up && cameraManager.upLockOnTarget != null)
+        else if (lockOnSelectionInput == Vector3.up && cameraManager.upLockOnTarget != null)//up target
         {
             newTarget = cameraManager.upLockOnTarget;
 
