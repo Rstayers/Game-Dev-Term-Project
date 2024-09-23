@@ -61,7 +61,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
         ProcessStateMachine();
     }
 
-    public override void TakeDamage(int amount, GameObject originator)
+    public override void TakeDamage(float amount, GameObject originator)
     {
         if(isDead) return;
         base.TakeDamage(amount, originator);

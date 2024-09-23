@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void TakeDamage(int amount, GameObject originator);
+    void TakeDamage(float amount, GameObject originator);
     void DealDamage(IDamageable recipient);
 
     void OnDeath();
@@ -16,11 +16,12 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [HideInInspector] public CharacterCombatManager combatManager;
     [Header("Stats")]
     public Stats stats;
-    public int currentHealth;
-    public int currentStamina;
-    public int currentMana;
+    public float currentHealth;
+    public float currentStamina;
+    public float currentMana;
 
     [Header("State Flags")]
+    public bool isPlayer;
     public bool isPerformingAction;
     public bool isSprinting;
     public bool isInvincible = false;
@@ -41,22 +42,29 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     {
         animatorManager = GetComponent<CharacterAnimatorManager>();
         currentHealth = stats.maxHealth;
+        if(isPlayer)
+            UIHealthBar.instance.SetUpHearts((int)currentHealth);
         combatManager = GetComponent<CharacterCombatManager>(); 
         currentMana = stats.maxMana;
         currentStamina = stats.maxStamina;
     }
-    public virtual void TakeDamage(int amount, GameObject originator)
+    public virtual void TakeDamage(float amount, GameObject originator)
     {
         /*
          * Called by an enemy
          * Play animations and update stats
          */
+        Debug.Log(gameObject.name + originator.name);
         if (isInvincible)
             return;
        
         currentHealth -= amount;
+        if(isPlayer)
+            UIHealthBar.instance.RemoveHearts(amount);
+        else
+            healthBar.UpdateHealthBar(currentHealth, stats.maxHealth);
         animatorManager.PlayTargetAnimation(takeDamage, true);
-        healthBar.UpdateHealthBar(currentHealth, stats.maxHealth);
+       
         if (currentHealth <= 0)
         {
             OnDeath();

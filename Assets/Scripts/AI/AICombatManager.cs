@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -57,6 +58,29 @@ public class AICombatManager : CharacterCombatManager
                     PivotTowardsTarget(character);
                 }
             }
+        }
+    }
+    public void AIMeleeAttack()
+    {
+        /*
+         *  Animation event that spawns an overlap sphere to see if we do damage
+         */
+
+        Collider[] hits = Physics.OverlapSphere(meleeAttackPoint.position, meleeAttackRadius, WorldManager.Instance.getPlayerLayers());
+        foreach (Collider hit in hits)
+        {
+            Debug.Log(hit.gameObject.name);
+            //see if it is dameagable
+            if (hit.gameObject.TryGetComponent(out CharacterStateManager player))
+            {
+                
+                if (player.isDead || hit.gameObject == gameObject)
+                    continue;
+
+                stateManager.DealDamage(player);
+              
+            }
+
         }
     }
     public void PivotTowardsTarget(AICharacterManager targetCharacter)

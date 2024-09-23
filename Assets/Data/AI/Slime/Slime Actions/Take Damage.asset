@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470b64e8ad97a3446b5bd371aa11dad2, type: 3}
   m_Name: Take Damage
   m_EditorClassIdentifier: 
-  animation: 
+  animation: Take Damage

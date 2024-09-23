@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8419fa8638350274f8fb69f64db81940, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  meleeAttackPower: 10
+  maxHealth: 2
+  meleeAttackPower: 0.5
   maxStamina: 0
   maxMana: 0
   onDeathParticles: {fileID: 3628484861530870141, guid: b29c1c5bea1bd7842a18d01264e59edd,

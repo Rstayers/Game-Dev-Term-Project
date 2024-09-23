@@ -7,7 +7,7 @@ public class Stats : ScriptableObject
 {
     [Header("Base Stats")]
     public int maxHealth;
-    public int meleeAttackPower;
+    public float meleeAttackPower;
     public int maxStamina;
     public int maxMana;
     public GameObject onDeathParticles;

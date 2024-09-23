@@ -10,7 +10,7 @@ public class CharacterCombatManager : MonoBehaviour
     [Header("Managers")]
     [HideInInspector] public CharacterAnimatorManager animatorManager;
     public CameraManager cameraManager;
-    private CharacterStateManager stateManager;
+    [HideInInspector] public CharacterStateManager stateManager;
 
     [Header("Target Info")]
     public CharacterStateManager currentTarget = null;
@@ -25,8 +25,8 @@ public class CharacterCombatManager : MonoBehaviour
     public ActionContainer meleeAttackAction02;
     public float knockbackForce;
     [HideInInspector] public ActionContainer lastAttackPerformed;
-    [SerializeField] private Transform meleeAttackPoint;
-    [SerializeField] private float meleeAttackRadius;
+    public Transform meleeAttackPoint;
+    public float meleeAttackRadius;
 
     [Header("Ranged Combat")]
 
@@ -110,11 +110,12 @@ public class CharacterCombatManager : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(meleeAttackPoint.position, meleeAttackRadius, WorldManager.Instance.GetAttackableLayer());
         foreach (Collider hit in hits)
         {
+            Debug.Log(hit.gameObject.name);
             //see if it is dameagable
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
                 if (hit.gameObject.TryGetComponent(out CharacterStateManager manager))
-                    if (manager.isDead)
+                    if (manager.isDead || hit.gameObject == gameObject)
                         continue;
 
                 stateManager.DealDamage(enemy);
