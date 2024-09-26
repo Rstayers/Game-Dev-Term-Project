@@ -116,6 +116,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Change Journal Page"",
+                    ""type"": ""Value"",
+                    ""id"": ""da10c1fa-0fe6-4e7f-aad0-3b138cc7f4ca"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Open Journal"",
+                    ""type"": ""Button"",
+                    ""id"": ""5b5265a9-1b03-44cd-93c2-302e31da56d8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -547,6 +565,138 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Lock On Selection"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7e8b9907-f64d-45e8-a17a-e54fc8d7707f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""6cbd695b-f8c9-4bcc-a439-1a684b76f777"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""ce1d720a-654b-4241-a4a3-2550fd8d9042"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""67b9533a-063e-42a4-a7b4-59f1430c3093"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""1cba355a-8a0d-4d35-9ce6-fbdcbbfab744"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""2e9c2df3-a56b-42df-9e69-868dca6ed3d0"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""3980049d-a736-4f1e-b30a-d2f65000a911"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""297a26bd-6e14-4c9a-b097-6228bd085b23"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Left"",
+                    ""id"": ""7104d629-67fc-42c6-a415-031fafb728a6"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Right"",
+                    ""id"": ""9526db1f-adc2-4669-be99-522685d3dfc8"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Change Journal Page"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06fee651-7ba6-405e-926d-059ee7795ea2"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Journal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ad61b59-48e2-4670-9c84-1869e331378c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open Journal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -593,6 +743,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_BaseMovement_DodgeRoll = m_BaseMovement.FindAction("Dodge Roll", throwIfNotFound: true);
         m_BaseMovement_LockOn = m_BaseMovement.FindAction("Lock On", throwIfNotFound: true);
         m_BaseMovement_LockOnSelection = m_BaseMovement.FindAction("Lock On Selection", throwIfNotFound: true);
+        m_BaseMovement_ChangeJournalPage = m_BaseMovement.FindAction("Change Journal Page", throwIfNotFound: true);
+        m_BaseMovement_OpenJournal = m_BaseMovement.FindAction("Open Journal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -664,6 +816,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_BaseMovement_DodgeRoll;
     private readonly InputAction m_BaseMovement_LockOn;
     private readonly InputAction m_BaseMovement_LockOnSelection;
+    private readonly InputAction m_BaseMovement_ChangeJournalPage;
+    private readonly InputAction m_BaseMovement_OpenJournal;
     public struct BaseMovementActions
     {
         private @PlayerControls m_Wrapper;
@@ -678,6 +832,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @DodgeRoll => m_Wrapper.m_BaseMovement_DodgeRoll;
         public InputAction @LockOn => m_Wrapper.m_BaseMovement_LockOn;
         public InputAction @LockOnSelection => m_Wrapper.m_BaseMovement_LockOnSelection;
+        public InputAction @ChangeJournalPage => m_Wrapper.m_BaseMovement_ChangeJournalPage;
+        public InputAction @OpenJournal => m_Wrapper.m_BaseMovement_OpenJournal;
         public InputActionMap Get() { return m_Wrapper.m_BaseMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -717,6 +873,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOnSelection.started += instance.OnLockOnSelection;
             @LockOnSelection.performed += instance.OnLockOnSelection;
             @LockOnSelection.canceled += instance.OnLockOnSelection;
+            @ChangeJournalPage.started += instance.OnChangeJournalPage;
+            @ChangeJournalPage.performed += instance.OnChangeJournalPage;
+            @ChangeJournalPage.canceled += instance.OnChangeJournalPage;
+            @OpenJournal.started += instance.OnOpenJournal;
+            @OpenJournal.performed += instance.OnOpenJournal;
+            @OpenJournal.canceled += instance.OnOpenJournal;
         }
 
         private void UnregisterCallbacks(IBaseMovementActions instance)
@@ -751,6 +913,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @LockOnSelection.started -= instance.OnLockOnSelection;
             @LockOnSelection.performed -= instance.OnLockOnSelection;
             @LockOnSelection.canceled -= instance.OnLockOnSelection;
+            @ChangeJournalPage.started -= instance.OnChangeJournalPage;
+            @ChangeJournalPage.performed -= instance.OnChangeJournalPage;
+            @ChangeJournalPage.canceled -= instance.OnChangeJournalPage;
+            @OpenJournal.started -= instance.OnOpenJournal;
+            @OpenJournal.performed -= instance.OnOpenJournal;
+            @OpenJournal.canceled -= instance.OnOpenJournal;
         }
 
         public void RemoveCallbacks(IBaseMovementActions instance)
@@ -798,5 +966,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDodgeRoll(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
         void OnLockOnSelection(InputAction.CallbackContext context);
+        void OnChangeJournalPage(InputAction.CallbackContext context);
+        void OnOpenJournal(InputAction.CallbackContext context);
     }
 }

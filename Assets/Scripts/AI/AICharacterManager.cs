@@ -12,11 +12,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     [HideInInspector] public AICombatManager aiCombatManager;
     private Rigidbody rb;
 
-    [Header("Combat")]
-    [SerializeField] private float flashDuration = .1f;
-    [SerializeField] private Color emissionHitColor;
-    private Renderer enemyRenderer;
-    private Color originalColor;
+    
 
     [Header("Current State")]
     [SerializeField] private AIState currentState;
@@ -37,14 +33,10 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     {
         rb = GetComponent<Rigidbody>();
         currentHealth = stats.maxHealth;
-        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
         locomotionManager = GetComponent<AILocomotionManager>();
         aiCombatManager = GetComponent<AICombatManager>();
-        enemyRenderer = GetComponentInChildren<Renderer>();
-        if (enemyRenderer != null)
-        {
-            originalColor = enemyRenderer.material.GetColor("_EmissionColor");
-        }
+     
 
         //Use a copy of scriptable object so original is not modified
         idle = Instantiate(idle);
@@ -86,14 +78,13 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     
     void ProcessStateMachine()
     {
+        if (isDead) return;
         AIState nextState = currentState?.Tick(this);
         if (nextState != null)
         {
             currentState = nextState;
         }
-        //the position/rotation should only be reset after the state machine has processed it's tick
-        navMeshAgent.transform.localPosition = Vector3.zero;
-        navMeshAgent.transform.localRotation = Quaternion.identity;
+
 
         if(aiCombatManager.currentTarget != null)
         {
@@ -136,18 +127,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
             yield return null;  // Wait for the next frame
         }
     }
-    private IEnumerator FlashWhite()
-    {
-        // Set the emission color to white
-        enemyRenderer.material.SetColor("_EmissionColor", emissionHitColor);
-        enemyRenderer.material.EnableKeyword("_EMISSION");
-
-        // Wait for a short duration
-        yield return new WaitForSeconds(flashDuration);
-
-        // Revert the emission color to the original color
-        enemyRenderer.material.SetColor("_EmissionColor", originalColor);
-    }
+  
     #endregion
 
     public void DestroyEnemy()
@@ -166,6 +146,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
 
         // Optionally, destroy the particle after it's done playing
         Destroy(particleInstance, particleSystem.main.duration);
+        Debug.Log("Des");
         Destroy(gameObject);
     }
 

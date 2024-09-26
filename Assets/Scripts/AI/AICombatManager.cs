@@ -78,7 +78,9 @@ public class AICombatManager : CharacterCombatManager
                     continue;
 
                 stateManager.DealDamage(player);
-              
+                TriggerHitPause(waitFrames);
+                WorldManager.Instance.GetCameraShake().GenerateImpulse();
+
             }
 
         }
@@ -109,6 +111,8 @@ public class AICombatManager : CharacterCombatManager
     }
     public void RotateTowardsAgent(AICharacterManager character)
     {
+        return;
+        ///allign transform to navmesh agent
         if(character.isMoving)
         {
             character.transform.rotation = character.navMeshAgent.transform.rotation; 
@@ -128,7 +132,7 @@ public class AICombatManager : CharacterCombatManager
         }
 
         Quaternion rotation = Quaternion.LookRotation(targetsDirection);
-
+        Debug.Log("Turning");
         character.transform.rotation = Quaternion.Slerp(character.transform.rotation, rotation, attackRotationSpeed * Time.deltaTime);
     }
     public void HandleActionRecovery(AICharacterManager character)

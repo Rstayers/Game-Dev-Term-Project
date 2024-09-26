@@ -25,7 +25,7 @@ public class PursueTargetState : AIState
         character.locomotionManager.RotateTowardsAgent(character);
         //If we are within combat range, switch state
         if(character.locomotionManager.distanceFromTarget <= character.navMeshAgent.stoppingDistance && character.locomotionManager.distanceFromTarget > 0)
-            return SwitchState(character, character.attack);
+            return SwitchState(character, character.combatStance);
         //If target is not reachable, return home
 
         //Pursue target

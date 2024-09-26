@@ -16,12 +16,18 @@ public class WorldManager : MonoBehaviour
     [SerializeField] LayerMask interactionLayers;
     [Header("Camera")]
     [SerializeField] CinemachineVirtualCamera cam;
+    private CinemachineImpulseSource cameraShake;
     private void Awake()
     {
+        cameraShake = GetComponent<CinemachineImpulseSource>();
         if(Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+    }
+    public CinemachineImpulseSource GetCameraShake()
+    {
+        return cameraShake;
     }
     public LayerMask GetAttackableLayer()
     {

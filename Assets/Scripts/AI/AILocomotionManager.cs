@@ -38,13 +38,16 @@ public class AILocomotionManager : MonoBehaviour
 
     }
 
-    public void Patrol(AICharacterManager manager)
+    public void Patrol(AICharacterManager character)
     {
-        PickNewPatrolPoint(manager);
+        PickNewPatrolPoint(character);
+        character.locomotionManager.RotateTowardsAgent(character);
         // Move the enemy towards the patrol point
-        manager.navMeshAgent.SetDestination(patrolPoint);
+        NavMeshPath navMeshPath = new NavMeshPath();
+        character.navMeshAgent.CalculatePath(patrolPoint, navMeshPath);
+        character.navMeshAgent.SetPath(navMeshPath);
         isPatrolling = true;
-        manager.isMoving = true;
+        character.isMoving = true;
         
        
     }
@@ -53,7 +56,7 @@ public class AILocomotionManager : MonoBehaviour
         if (isPatrolling)
         {
             distanceToPoint = Vector3.Distance(transform.position, patrolPoint);
-            character.transform.rotation = character.navMeshAgent.transform.rotation;
+            character.locomotionManager.RotateTowardsAgent(character);
         }
     }
     void PickNewPatrolPoint(AICharacterManager character)

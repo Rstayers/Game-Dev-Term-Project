@@ -23,6 +23,7 @@ public class CharacterCombatManager : MonoBehaviour
     [Header("Melee Combat")]
     public ActionContainer meleeAttackAction01;
     public ActionContainer meleeAttackAction02;
+    public GameObject melee01AttackVFX;
     public float knockbackForce;
     [HideInInspector] public ActionContainer lastAttackPerformed;
     public Transform meleeAttackPoint;
@@ -31,8 +32,7 @@ public class CharacterCombatManager : MonoBehaviour
     [Header("Ranged Combat")]
 
     [Header("General Combat")]
-    [SerializeField] private int waitFrames = 2;
-    private CinemachineImpulseSource cameraShake;
+    public int waitFrames = 2;
 
     [Header("Flags")]
     public bool canCombo = false;
@@ -40,7 +40,6 @@ public class CharacterCombatManager : MonoBehaviour
     void Awake()
     {
         animatorManager = GetComponent<CharacterAnimatorManager>();
-        cameraShake = GetComponent<CinemachineImpulseSource>();
         stateManager = GetComponent<CharacterStateManager>();
     }
     private void Update()
@@ -89,16 +88,19 @@ public class CharacterCombatManager : MonoBehaviour
         if (canCombo && stateManager.isPerformingAction)
         {
             canCombo = false;
-            if(lastAttackPerformed == meleeAttackAction01)
+            if (lastAttackPerformed == meleeAttackAction01)
                 animatorManager.PlayTargetAnimation(meleeAttackAction02, true);
             else
-
+            {
                 animatorManager.PlayTargetAnimation(meleeAttackAction01, true);
+
+            }
 
         }
         else if(!stateManager.isPerformingAction)
         {
             animatorManager.PlayTargetAnimation(meleeAttackAction01, true);
+           
         }
     }
     public void Attack()
@@ -110,7 +112,6 @@ public class CharacterCombatManager : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(meleeAttackPoint.position, meleeAttackRadius, WorldManager.Instance.GetAttackableLayer());
         foreach (Collider hit in hits)
         {
-            Debug.Log(hit.gameObject.name);
             //see if it is dameagable
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
@@ -120,10 +121,31 @@ public class CharacterCombatManager : MonoBehaviour
 
                 stateManager.DealDamage(enemy);
                 TriggerHitPause(waitFrames);
-                cameraShake?.GenerateImpulse();
+                WorldManager.Instance.GetCameraShake().GenerateImpulse();
             }
 
         }
+    }
+    public void Melee01VFX()
+    {
+        Quaternion playerRotation = Quaternion.LookRotation(transform.forward);
+
+        Quaternion vfxOriginalRotation = melee01AttackVFX.transform.rotation;
+
+        Quaternion combinedRotation = playerRotation * vfxOriginalRotation;
+
+        GameObject particleInstance = Instantiate(melee01AttackVFX, lockOnTransform.position, combinedRotation);
+
+   
+        // Get the VFX and play
+        ParticleSystem particleSystem = particleInstance.GetComponent<ParticleSystem>();
+
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+        }
+
+        Destroy(particleInstance, particleSystem.main.duration);
     }
     #endregion
     #region Combos

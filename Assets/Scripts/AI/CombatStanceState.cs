@@ -108,13 +108,14 @@ public class CombatStanceState : AIState
             {
                 //This is our attack
                 chosenAttack = attack;
+                character.attack.currentAttack = chosenAttack;
                 previousAttack = chosenAttack;
                 hasAttack = true;
                 return;
             }
         }
-            //4. Pass attack to attack state
-        }
+        
+    }
     protected virtual bool RollForOutcomeChance(int outcomeChance)
     {
         bool outcomeWillBePerformed = false;
