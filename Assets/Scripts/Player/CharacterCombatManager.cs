@@ -116,12 +116,13 @@ public class CharacterCombatManager : MonoBehaviour
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
                 if (hit.gameObject.TryGetComponent(out CharacterStateManager manager))
-                    if (manager.isDead || hit.gameObject == gameObject)
+                    if (manager.isDead || hit.gameObject == gameObject || manager.isInvincible)
                         continue;
 
                 stateManager.DealDamage(enemy);
+                
                 TriggerHitPause(waitFrames);
-                WorldManager.Instance.GetCameraShake().GenerateImpulse();
+                
             }
 
         }

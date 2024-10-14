@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterAnimatorManager : MonoBehaviour
 {
     [HideInInspector] public Animator animator;
-    private CharacterCombatManager characterCombatManager;
+    [HideInInspector] public CharacterCombatManager characterCombatManager;
     [Header("Movement")]
     private int vertical;
     private int horizontal;
@@ -23,6 +23,7 @@ public class CharacterAnimatorManager : MonoBehaviour
          * Update movement values for animator
          */
         if(verticalMovement == 2) verticalMovement = 2;
+
         else if (verticalMovement > .7f) verticalMovement = 1;
         else if (verticalMovement < -.7f) verticalMovement = -1;
 

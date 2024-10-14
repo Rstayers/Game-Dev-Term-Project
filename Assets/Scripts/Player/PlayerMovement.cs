@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         HandleDodgeTimer();
         if (animatorManager.animator.GetBool("isInteracting")) return;
         HandleMovement();
+        HandleClimbing();
         StepClimb(); 
         HandleAnimation();
         HandleFall();
@@ -110,21 +111,22 @@ public class PlayerMovement : MonoBehaviour
 
         rollTime += Time.deltaTime;
 
-        RaycastHit hit;
-        Vector3 dodgeDirection = rollDirection.normalized;
-        float dodgeDistanceCovered = Vector3.Distance(rollStartPosition, Vector3.Lerp(rollStartPosition, rollTargetPosition, rollTime / settings.dodgeDuration));
-
-        // Check for obstacles in the dodge direction using a raycast
-        if (Physics.Raycast(transform.position, dodgeDirection, out hit, dodgeDistanceCovered, WorldManager.Instance.GetGroundLayer()))
-        {
-            rollTargetPosition = hit.point;
-        }
-
-        // Move the player 
         if (IsGroundAhead(rollDirection, settings.cliffDetectionDistance))
         {
-            Vector3 targetPosition = Vector3.Lerp(rollStartPosition, rollTargetPosition, rollTime / settings.dodgeDuration);
-            rb.MovePosition(targetPosition);  
+            // target position for the dodge
+            Vector3 movement = rollDirection * (settings.dodgeDistance / settings.dodgeDuration) * Time.deltaTime;
+            Vector3 targetPosition = rb.position + movement;
+
+            // Raycast downward adjust y for ground contact
+            RaycastHit hit;
+            Vector3 rayOrigin = targetPosition + Vector3.up; 
+            if (Physics.Raycast(rayOrigin, Vector3.down, out hit, settings.maxHeightThreshold, WorldManager.Instance.GetGroundLayer()))
+            {
+                targetPosition.y = hit.point.y;
+            }
+
+            rb.MovePosition(targetPosition);
+
         }
 
         if (rollTime >= settings.dodgeDuration)
@@ -179,9 +181,23 @@ public class PlayerMovement : MonoBehaviour
             lookDirection = Vector3.zero;
         }
     }
+    private void HandleClimbing()
+    {
+        if (!characterStateManager.isClimbing) return;
+        Vector3 moveDirection = new Vector3(0, input.y, 0);
 
+        // Normalize the moveDirection to get a unit vector
+        moveDirection = moveDirection.normalized;
+
+        rb.AddForce(moveDirection, ForceMode.VelocityChange);
+
+        // Reset the force direction
+        forceDirection = Vector3.zero;
+
+    }
    private void HandleMovement()
     {
+        if (characterStateManager.isClimbing) return;
 
         // Calculate the direction the player is trying to move
         Vector3 moveDirection = input.x * Helpers.GetCameraRight(camera) + input.y * Helpers.GetCameraForward(camera);
@@ -222,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleFall()
     {
-
+        if (characterStateManager.isClimbing) return;
         if (IsGrounded())
         {
             // Apply a small downward force to keep the player grounded on slopes
@@ -264,13 +280,15 @@ public class PlayerMovement : MonoBehaviour
          *  Update animator values depending on sprint status and lock on
          */
         Vector2 normalInput = input.normalized;
+
         if (characterStateManager.isSprinting && !characterStateManager.isLockedOn)
             animatorManager.UpdateAnimatorValues(2, 2);
-
+     
         else if (!characterStateManager.isLockedOn)
             animatorManager.UpdateAnimatorValues(Mathf.Abs(normalInput.x), Mathf.Abs(normalInput.y));
         else if (characterStateManager.isLockedOn)
             animatorManager.UpdateAnimatorValues(-Mathf.Abs(normalInput.x), -Mathf.Abs(normalInput.y));
+       
 
     }
     #endregion

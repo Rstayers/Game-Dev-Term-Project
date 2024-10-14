@@ -16,7 +16,7 @@ public class InputPopUp : MonoBehaviour
     private void Awake()
     {
         inputText = GetComponentInChildren<TextMeshProUGUI>();
-        transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.InCirc);
+        transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f).SetEase(Ease.InCirc);
         cam = FindObjectOfType<CinemachineVirtualCamera>();
         playerInput = FindObjectOfType<PlayerInput>();
         interactAction = playerInput.actions["Interact"];
@@ -24,7 +24,7 @@ public class InputPopUp : MonoBehaviour
   
     public void Dissapear()
     {
-        transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.OutCirc).OnComplete(() => {
+        transform.DOScale(Vector3.zero, 0.1f).SetEase(Ease.OutCirc).OnComplete(() => {
             DestroyImmediate(gameObject);
 
         });

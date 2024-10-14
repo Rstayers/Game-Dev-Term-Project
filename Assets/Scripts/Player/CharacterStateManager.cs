@@ -23,6 +23,7 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [Header("State Flags")]
     public bool isPlayer;
     public bool isPerformingAction;
+    public bool isClimbing = false;
     public bool isSprinting;
     public bool isInvincible = false;
     public bool isLockedOn = false;
@@ -66,7 +67,7 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
          */
         if (isInvincible)
             return;
-       
+        WorldManager.Instance.GetCameraShake().GenerateImpulse();
         currentHealth -= amount;
         if(isPlayer)
             UIHealthBar.instance.RemoveHearts(amount);
