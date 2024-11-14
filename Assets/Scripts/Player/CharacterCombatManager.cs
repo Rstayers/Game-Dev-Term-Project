@@ -9,7 +9,7 @@ public class CharacterCombatManager : MonoBehaviour
 {
     [Header("Managers")]
     [HideInInspector] public CharacterAnimatorManager animatorManager;
-    public CameraManager cameraManager;
+    [HideInInspector] public CameraManager cameraManager;
     [HideInInspector] public CharacterStateManager stateManager;
 
     [Header("Target Info")]
@@ -39,6 +39,7 @@ public class CharacterCombatManager : MonoBehaviour
     public bool inFiringMode = false;
     void Awake()
     {
+        cameraManager = FindObjectOfType<CameraManager>();
         animatorManager = GetComponent<CharacterAnimatorManager>();
         stateManager = GetComponent<CharacterStateManager>();
     }
@@ -52,6 +53,7 @@ public class CharacterCombatManager : MonoBehaviour
 
     #region Magic Attack
     public void FiringModeInput(InputAction.CallbackContext ctx)
+
     {
         if (ctx.canceled)
             inFiringMode = false;
@@ -60,7 +62,7 @@ public class CharacterCombatManager : MonoBehaviour
     }
     public void FiringInput(InputAction.CallbackContext ctx)
     {
-        if (!inFiringMode || ctx.canceled) return;
+        if (!inFiringMode || ctx.canceled || !stateManager.hasWeapon) return;
 
       
         FireSpell(ctx.ReadValue<Vector2>());
@@ -84,7 +86,7 @@ public class CharacterCombatManager : MonoBehaviour
          * 
          */
 
-        if (!ctx.performed || inFiringMode) return;
+        if (!ctx.performed || inFiringMode || !stateManager.hasWeapon) return;
         if (canCombo && stateManager.isPerformingAction)
         {
             canCombo = false;
@@ -115,6 +117,7 @@ public class CharacterCombatManager : MonoBehaviour
             //see if it is dameagable
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
+                print(hit.gameObject);
                 if (hit.gameObject.TryGetComponent(out CharacterStateManager manager))
                     if (manager.isDead || hit.gameObject == gameObject || manager.isInvincible)
                         continue;

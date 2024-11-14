@@ -27,9 +27,11 @@ public class JournalManager : MonoBehaviour
         {
             rightPage = discoveredPages[0];
             leftPage = rightPage.prev;
+            Debug.Log(rightPage);
+            Debug.Log(rightPage.prev);
 
         }
-        
+
     }
     private void UpdatePages()
     {
@@ -39,10 +41,14 @@ public class JournalManager : MonoBehaviour
         {
 
             if (pages[i].discovered)
+            {
                 discoveredPages.Add(pages[i]);
+                pages[i].gameObject.SetActive(true);
+            }
             else
                 pages[i].gameObject.SetActive(false);
         }
+        discoveredPages.Reverse();
         //set up linked list for discovered pages
         for (int i = 0; i < discoveredPages.Count; i++)
         {
@@ -54,7 +60,8 @@ public class JournalManager : MonoBehaviour
     }
     public void ToggleJournal(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed && discoveredPages.Count != 0)
+
+        if (!ctx.performed || discoveredPages.Count == 0)
             return;
         if (isJournalOpen)
         {
@@ -94,7 +101,7 @@ public class JournalManager : MonoBehaviour
         }
     }
 
-    public void AddJournalEntry(JournalPage page, int number)
+    public void DiscoverPage(JournalPage page)
     {
         if (!discoveredPages.Contains(page))
         {
@@ -106,11 +113,18 @@ public class JournalManager : MonoBehaviour
                     break;
                 }
             }
-            rightPage = discoveredPages.Find(i => i == page);
-            leftPage = page.prev;
             UpdatePages();
-            
+            rightPage = page;
+            leftPage = page.prev;
             OpenJournal();
+            foreach(var _page in discoveredPages)
+            {
+                if (_page == rightPage)
+                    return;
+                Vector3 targetRotRight = new Vector3(0, -180, 0) + _page.transform.eulerAngles;
+                _page.transform.eulerAngles = targetRotRight;
+            }
+            
             // Play anim and audio
         }
     }
@@ -118,6 +132,7 @@ public class JournalManager : MonoBehaviour
     private void OpenJournal()
     {
         isJournalOpen = true;
+        Debug.Log("open");
         journalUI.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Flash);
     }
 

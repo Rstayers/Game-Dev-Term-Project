@@ -10,6 +10,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera cam;
     private void Awake()
     {
+        cam = FindObjectOfType<CinemachineVirtualCamera>();
         healthBar = GetComponent<Slider>();
         parent = transform.GetChild(0).gameObject;
     }

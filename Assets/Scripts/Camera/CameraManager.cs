@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera; 
     [Header("Player")]
-    [SerializeField] private CharacterStateManager player;
+    private CharacterStateManager player;
 
     [Header("Lock On")]
     [SerializeField] private float lockOnDetectionDistance = 20;
@@ -26,11 +26,13 @@ public class CameraManager : MonoBehaviour
     [Header("Lock On Target Info")]
     [HideInInspector] public List<CharacterStateManager> availableTargets = new List<CharacterStateManager>();
     [HideInInspector] public CharacterStateManager nearestLockOnTarget, rightLockOnTarget, leftLockOnTarget, downLockOnTarget, upLockOnTarget;
-    private void Awake()
+    private void Start()
     {
+        player = FindObjectOfType<PlayerMovement>().GetComponent<CharacterStateManager>();
         pivot = transform.parent.transform;
         standardRotation = pivot.rotation;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
+        virtualCamera.Follow = player.cameraLock;
     }
     private void Update()
     {

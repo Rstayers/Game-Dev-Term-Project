@@ -1165,11 +1165,14 @@ MonoBehaviour:
   isLockedOn: 0
   isDead: 0
   canInteract: 0
+  hasWeapon: 0
   die: {fileID: 11400000, guid: b6683bd190e746c47b74681e5e4a3bb9, type: 2}
   takeDamage: {fileID: 11400000, guid: dacaab4f1513a4144ac632a1c5224886, type: 2}
   healthBar: {fileID: 6751553638814265279}
   flashDuration: 0.15
   emissionHitColor: {r: 0.4339623, g: 0.024379903, b: 0, a: 1}
+  cameraLock: {fileID: 0}
+  weapon: {fileID: 0}
   locomotionManager: {fileID: 0}
   aiCombatManager: {fileID: 0}
   currentState: {fileID: 11400000, guid: bc9f58441d350774d8d234ec27d3e3bc, type: 2}
@@ -1180,6 +1183,8 @@ MonoBehaviour:
   patrol: {fileID: 11400000, guid: 81bd2b18d02621646a94adf9fbf8afb1, type: 2}
   combatStance: {fileID: 11400000, guid: 90a50717514ed954da25da460331950c, type: 2}
   isMoving: 0
+  drops:
+  - {fileID: 4168280996421800358, guid: 02eaf269163218a41a50dd95edf1ae94, type: 3}
 --- !u!114 &6442818235619889610
 MonoBehaviour:
   m_ObjectHideFlags: 0

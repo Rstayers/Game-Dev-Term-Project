@@ -184,7 +184,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8d362143-83b8-45b6-8143-4f578287447d"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -316,7 +316,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d6f041d6-2cf0-4868-ae32-c0ed0aec4e3f"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

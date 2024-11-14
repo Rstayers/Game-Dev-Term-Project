@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public interface IDamageable
 {
     void TakeDamage(float amount, GameObject originator);
@@ -14,6 +14,7 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [Header("Managers")]
     [HideInInspector] public CharacterAnimatorManager animatorManager;
     [HideInInspector] public CharacterCombatManager combatManager;
+    private JournalManager journal;
     [Header("Stats")]
     public Stats stats;
     public float currentHealth;
@@ -29,6 +30,7 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     public bool isLockedOn = false;
     public bool isDead = false;
     public bool canInteract = false;
+    public bool hasWeapon = false;
     [Header("State Animations")]
     public ActionContainer die;
     public ActionContainer takeDamage;
@@ -39,6 +41,10 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [SerializeField] private Color emissionHitColor;
     private Renderer _renderer;
     private Color originalColor;
+    [Header("Camera")]
+    public Transform cameraLock;
+
+    public GameObject weapon;
     private void FixedUpdate()
     {
         isPerformingAction = animatorManager.animator.GetBool("isInteracting");
@@ -47,6 +53,8 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     private void Start()
     {
         animatorManager = GetComponent<CharacterAnimatorManager>();
+        combatManager = GetComponent<CharacterCombatManager>();
+        journal = FindObjectOfType<JournalManager>();
         currentHealth = stats.maxHealth;
         _renderer = GetComponentInChildren<Renderer>();
         if (_renderer != null)
@@ -55,7 +63,7 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
         }
         if (isPlayer)
             UIHealthBar.instance.SetUpHearts((int)currentHealth);
-        combatManager = GetComponent<CharacterCombatManager>(); 
+        
         currentMana = stats.maxMana;
         currentStamina = stats.maxStamina;
     }
@@ -102,5 +110,18 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
 
         // Revert the emission color to the original color
         _renderer.material.SetColor("_EmissionColor", originalColor);
+    }
+    public void GiveWeapon()
+    {
+        weapon.SetActive(true);
+    }
+    public void ToggleJournal(InputAction.CallbackContext ctx)
+    {
+        Debug.Log("here");
+        journal.ToggleJournal(ctx);
+    }
+    public void ChangeJournalPage(InputAction.CallbackContext ctx)
+    {
+        journal.ChangePage(ctx);
     }
 }

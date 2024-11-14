@@ -12,8 +12,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     [HideInInspector] public AICombatManager aiCombatManager;
     private Rigidbody rb;
 
-    
-
+   
     [Header("Current State")]
     [SerializeField] private AIState currentState;
 
@@ -28,7 +27,8 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     public AIState combatStance;
 
     public bool isMoving;
-
+    [Header("Drops")]
+    public List<GameObject> drops;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -71,9 +71,10 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     }
     public void OnDeath()
     {
+       
         animatorManager.PlayTargetAnimation(die, true);
         isDead = true;
-    
+        
     }
     
     void ProcessStateMachine()
@@ -143,10 +144,13 @@ public class AICharacterManager : CharacterStateManager, IDamageable
         {
             particleSystem.Play();
         }
-
+        foreach (var drop in drops)
+        {
+            GameObject clone = Instantiate(drop, combatManager.lockOnTransform.position, Quaternion.identity);
+            clone.transform.position = combatManager.lockOnTransform.transform.position;
+        }
         // Optionally, destroy the particle after it's done playing
         Destroy(particleInstance, particleSystem.main.duration);
-        Debug.Log("Des");
         Destroy(gameObject);
     }
 

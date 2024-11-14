@@ -4,14 +4,11 @@ Shader "Unlit/one-side"
     {
         _MainTex("Texture", 2D) = "white" {}
         [Enum(UnityEngine.Rendering.CullMode)] _Cull("Cull", Float) = 0
-        _Color("Color Tint", Color) = (1,1,1,1)
     }
         SubShader
         {
             Tags {"Queue" = "Transparent" "RenderType" = "Transparent"}
-            Lighting Off
-            ZWrite Off
-            Blend SrcAlpha OneMinusSrcAlpha
+            Lighting Off ZWrite Off
             Cull[_Cull]
 
             Pass
@@ -19,6 +16,7 @@ Shader "Unlit/one-side"
                 CGPROGRAM
                 #pragma vertex vert
                 #pragma fragment frag
+
                 #include "UnityCG.cginc"
 
                 struct appdata
@@ -36,7 +34,6 @@ Shader "Unlit/one-side"
 
                 sampler2D _MainTex;
                 float4 _MainTex_ST;
-                float4 _Color;
 
                 v2f vert(appdata v)
                 {
@@ -48,10 +45,10 @@ Shader "Unlit/one-side"
 
                 fixed4 frag(v2f i) : SV_Target
                 {
-                    fixed4 col = tex2D(_MainTex, i.uv) * _Color;
+                    fixed4 col = tex2D(_MainTex, i.uv);
                     if (col.a < 0.1)
                     {
-                        discard; // Avoid rendering almost fully transparent pixels
+                        discard;
                     }
                     return col;
                 }

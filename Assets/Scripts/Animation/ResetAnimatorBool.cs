@@ -15,7 +15,7 @@ public class ResetAnimatorBool : StateMachineBehaviour
             stateManager = animator.GetComponent<CharacterStateManager>();
         }
         stateManager.isPerformingAction = false;
-        stateManager.combatManager.canCombo = false;
+        stateManager.combatManager.canCombo = false;              
         animator.SetBool(targetBool, status);
     }
    
