@@ -14,8 +14,10 @@ public class ResetAnimatorBool : StateMachineBehaviour
         {
             stateManager = animator.GetComponent<CharacterStateManager>();
         }
+        
         stateManager.isPerformingAction = false;
-        stateManager.combatManager.canCombo = false;              
+        if (stateManager.combatManager != null)
+            stateManager.combatManager.canCombo = false;              
         animator.SetBool(targetBool, status);
     }
    

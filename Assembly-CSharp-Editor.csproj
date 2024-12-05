@@ -1164,6 +1164,10 @@
       <Project>{C9AC6D62-5E5C-2C12-5548-FE539DA40F7E}</Project>
       <Name>Unity.Mathematics.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="StylizedWaterForURP.csproj">
+      <Project>{D29D24B6-FE58-19CC-AE91-0E5D712B55A1}</Project>
+      <Name>StylizedWaterForURP</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.csproj">
       <Project>{18598850-EE96-2B8B-3455-962572D05101}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
@@ -1287,6 +1291,10 @@
     <ProjectReference Include="Unity.AI.Navigation.Updater.csproj">
       <Project>{FBC55A28-2A7C-20F7-C288-0461C8CD0EFD}</Project>
       <Name>Unity.AI.Navigation.Updater</Name>
+    </ProjectReference>
+    <ProjectReference Include="StylizedWaterForURPEditor.csproj">
+      <Project>{F48DD286-DEBC-D5E1-5935-6658C40A30A7}</Project>
+      <Name>StylizedWaterForURPEditor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.VisualScripting.State.Editor.csproj">
       <Project>{026DAA6F-3813-1CA1-C908-A095F44A54EA}</Project>

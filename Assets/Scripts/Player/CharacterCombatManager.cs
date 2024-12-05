@@ -1,4 +1,5 @@
 using Cinemachine;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,10 @@ public class CharacterCombatManager : MonoBehaviour
     [Header("Flags")]
     public bool canCombo = false;
     public bool inFiringMode = false;
+    [Header("SFX")]
+    [SerializeField] AudioClip attack01SFX;
+    [SerializeField] AudioClip attack02SFX;
+    [SerializeField] AudioClip enemyHitSFX;
     void Awake()
     {
         cameraManager = FindObjectOfType<CameraManager>();
@@ -62,7 +67,7 @@ public class CharacterCombatManager : MonoBehaviour
     }
     public void FiringInput(InputAction.CallbackContext ctx)
     {
-        if (!inFiringMode || ctx.canceled || !stateManager.hasWeapon) return;
+        if (!inFiringMode || ctx.canceled || !stateManager.playerState.hasWeapon) return;
 
       
         FireSpell(ctx.ReadValue<Vector2>());
@@ -86,24 +91,31 @@ public class CharacterCombatManager : MonoBehaviour
          * 
          */
 
-        if (!ctx.performed || inFiringMode || !stateManager.hasWeapon) return;
+        if (!ctx.performed || inFiringMode || !stateManager.playerState.hasWeapon) return;
+
         if (canCombo && stateManager.isPerformingAction)
         {
             canCombo = false;
             if (lastAttackPerformed == meleeAttackAction01)
+            {
                 animatorManager.PlayTargetAnimation(meleeAttackAction02, true);
+                SFXManager.instance.PlaySFXClip(attack02SFX, transform, 0.5f);
+            }
             else
             {
                 animatorManager.PlayTargetAnimation(meleeAttackAction01, true);
+                SFXManager.instance.PlaySFXClip(attack01SFX, transform, 0.5f);
 
             }
-
+            
         }
         else if(!stateManager.isPerformingAction)
         {
             animatorManager.PlayTargetAnimation(meleeAttackAction01, true);
-           
+            SFXManager.instance.PlaySFXClip(attack01SFX, transform, 0.5f);
         }
+
+        
     }
     public void Attack()
     {
@@ -117,13 +129,12 @@ public class CharacterCombatManager : MonoBehaviour
             //see if it is dameagable
             if (hit.gameObject.TryGetComponent(out IDamageable enemy))
             {
-                print(hit.gameObject);
                 if (hit.gameObject.TryGetComponent(out CharacterStateManager manager))
                     if (manager.isDead || hit.gameObject == gameObject || manager.isInvincible)
                         continue;
+                SFXManager.instance.PlaySFXClip(enemyHitSFX, transform, .75f);
 
                 stateManager.DealDamage(enemy);
-                
                 TriggerHitPause(waitFrames);
                 
             }
@@ -140,7 +151,7 @@ public class CharacterCombatManager : MonoBehaviour
 
         GameObject particleInstance = Instantiate(melee01AttackVFX, lockOnTransform.position, combinedRotation);
 
-   
+       
         // Get the VFX and play
         ParticleSystem particleSystem = particleInstance.GetComponent<ParticleSystem>();
 
@@ -291,8 +302,22 @@ public class CharacterCombatManager : MonoBehaviour
         // Resume the game
         Time.timeScale = 1;
     }
+    public void TurnPlayerToCamera()
+    {
+
+        // Get the direction from the player to the camera
+        Vector3 cameraDirection = -cameraManager.transform.forward;
+        cameraDirection.y = 0; // Flatten the direction to the Y-plane
+        cameraDirection.Normalize();
+
+        // Calculate the target rotation
+        Quaternion targetRotation = Quaternion.LookRotation(cameraDirection, Vector3.up);
+
+        // Rotate the player to face the camera over time using DOTween
+        transform.DORotateQuaternion(targetRotation, 0.3f);
+    }
     #endregion
-    
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

@@ -18,8 +18,9 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [Header("Stats")]
     public Stats stats;
     public float currentHealth;
-    public float currentStamina;
     public float currentMana;
+    [Header("Player State")]
+    public PlayerState playerState;
 
     [Header("State Flags")]
     public bool isPlayer;
@@ -30,7 +31,6 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     public bool isLockedOn = false;
     public bool isDead = false;
     public bool canInteract = false;
-    public bool hasWeapon = false;
     [Header("State Animations")]
     public ActionContainer die;
     public ActionContainer takeDamage;
@@ -44,28 +44,32 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     [Header("Camera")]
     public Transform cameraLock;
 
+    [Header("Temp variables")]
     public GameObject weapon;
     private void FixedUpdate()
     {
         isPerformingAction = animatorManager.animator.GetBool("isInteracting");
         
     }
-    private void Start()
+    private void OnEnable()
     {
         animatorManager = GetComponent<CharacterAnimatorManager>();
         combatManager = GetComponent<CharacterCombatManager>();
         journal = FindObjectOfType<JournalManager>();
+     
         currentHealth = stats.maxHealth;
+        
         _renderer = GetComponentInChildren<Renderer>();
         if (_renderer != null)
         {
             originalColor = _renderer.material.GetColor("_EmissionColor");
         }
         if (isPlayer)
-            UIHealthBar.instance.SetUpHearts((int)currentHealth);
+            InitializePlayer();
+            
+        
         
         currentMana = stats.maxMana;
-        currentStamina = stats.maxStamina;
     }
     public virtual void TakeDamage(float amount, GameObject originator)
     {
@@ -77,8 +81,12 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
             return;
         WorldManager.Instance.GetCameraShake().GenerateImpulse();
         currentHealth -= amount;
-        if(isPlayer)
+
+        if (isPlayer)
+        {
             UIHealthBar.instance.RemoveHearts(amount);
+            playerState.currentHealth = currentHealth;
+        }
         else
             healthBar.UpdateHealthBar(currentHealth, stats.maxHealth);
         animatorManager.PlayTargetAnimation(takeDamage, true);
@@ -90,12 +98,16 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     }
     public void DealDamage(IDamageable recipient)
     {
-        
         recipient.TakeDamage(stats.meleeAttackPower, gameObject);
     }
 
-    public void OnDeath()
+    public virtual void OnDeath()
     {
+        if(isPlayer)
+        {
+            StartCoroutine(DeathWait());
+            
+        }
         animatorManager.PlayTargetAnimation(die, true);
         isDead = true;
     }
@@ -111,9 +123,17 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
         // Revert the emission color to the original color
         _renderer.material.SetColor("_EmissionColor", originalColor);
     }
+    public IEnumerator DeathWait()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        Destroy(gameObject);
+        GameManager.Instance.SpawnPlayer(playerState.lastSpawn);
+    }
     public void GiveWeapon()
     {
         weapon.SetActive(true);
+        FindObjectOfType<UIManager>().weaponIcon.SetActive(true);
     }
     public void ToggleJournal(InputAction.CallbackContext ctx)
     {
@@ -123,5 +143,17 @@ public class CharacterStateManager : MonoBehaviour, IDamageable
     public void ChangeJournalPage(InputAction.CallbackContext ctx)
     {
         journal.ChangePage(ctx);
+    }
+
+    private void InitializePlayer()
+    {
+        if(playerState.currentHealth == 0)
+            playerState.currentHealth = currentHealth;
+        else
+            currentHealth = playerState.currentHealth;
+        UIHealthBar.instance.SetUpHearts((int)stats.maxHealth);
+        UIHealthBar.instance.SetCurrentHealth(playerState.currentHealth);
+        if (playerState.hasWeapon)
+            GiveWeapon();
     }
 }

@@ -11,7 +11,7 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     [HideInInspector] public AILocomotionManager locomotionManager;
     [HideInInspector] public AICombatManager aiCombatManager;
     private Rigidbody rb;
-
+    [HideInInspector] public AISpawn spawn;
    
     [Header("Current State")]
     [SerializeField] private AIState currentState;
@@ -36,7 +36,6 @@ public class AICharacterManager : CharacterStateManager, IDamageable
         navMeshAgent = GetComponent<NavMeshAgent>();
         locomotionManager = GetComponent<AILocomotionManager>();
         aiCombatManager = GetComponent<AICombatManager>();
-     
 
         //Use a copy of scriptable object so original is not modified
         idle = Instantiate(idle);
@@ -69,11 +68,10 @@ public class AICharacterManager : CharacterStateManager, IDamageable
     {
         recipient.TakeDamage(stats.meleeAttackPower, gameObject);
     }
-    public void OnDeath()
+    public override void OnDeath()
     {
-       
-        animatorManager.PlayTargetAnimation(die, true);
-        isDead = true;
+        base.OnDeath();
+        spawn.isDead = true;
         
     }
     

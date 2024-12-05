@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 29315c7de6f965844a13ed180820ad24
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: '{"shaderPath":"Shader Graphs/TerrainBlend","attributes":[{"isBaseTexture":false,"channel":4,"index":0,"range":{"x":0.0,"y":1.0},"propertyTarget":"_TopTexture","mask":0},{"isBaseTexture":false,"channel":4,"index":0,"range":{"x":0.0,"y":1.0},"propertyTarget":"_BottomTexture","mask":0},{"isBaseTexture":false,"channel":4,"index":0,"range":{"x":0.0,"y":1.0},"propertyTarget":"unity_ShadowMasks","mask":0},{"isBaseTexture":false,"channel":4,"index":0,"range":{"x":0.0,"y":1.0},"propertyTarget":"unity_LightmapsInd","mask":0},{"isBaseTexture":false,"channel":4,"index":0,"range":{"x":0.0,"y":1.0},"propertyTarget":"unity_Lightmaps","mask":0}]}'
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}

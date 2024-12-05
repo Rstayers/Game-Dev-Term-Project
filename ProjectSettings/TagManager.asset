@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - Health Bar
+  - RestFade
+  - MainCanvas
   layers:
   - Default
   - TransparentFX

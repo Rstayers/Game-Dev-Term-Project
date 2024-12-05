@@ -10,11 +10,12 @@ public class JournalManager : MonoBehaviour
 {
     [Header("UI Properties")]
     public GameObject journalUI;
-
+    public GameObject buttonHint;
+    public GameObject BG;
     private List<JournalPage> discoveredPages = new List<JournalPage>();
     private List<JournalPage> pages = new List<JournalPage>();
     private JournalPage leftPage, rightPage;
-    private bool isJournalOpen = false;
+    public bool isJournalOpen = false;
     
 
     private bool canChange = true;
@@ -77,6 +78,7 @@ public class JournalManager : MonoBehaviour
     {
         if (!isJournalOpen) return;
         Vector3 direction = ctx.ReadValue<Vector2>();
+        Debug.Log(direction);
         if (direction == Vector3.zero)
         {
             canChange = true;
@@ -132,19 +134,30 @@ public class JournalManager : MonoBehaviour
     private void OpenJournal()
     {
         isJournalOpen = true;
-        Debug.Log("open");
-        journalUI.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Flash);
+        journalUI.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+        {
+
+            buttonHint.SetActive(true);
+            buttonHint.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.Flash);
+            BG.SetActive(true);
+        });
+
     }
 
     private void CloseJournal()
     {
         isJournalOpen = false;
-        journalUI.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash);
+        BG.SetActive(false);
+        journalUI.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash).OnComplete(() =>
+        {
+            buttonHint.transform.DOScale(Vector3.zero, 0.2f).SetEase(Ease.Flash);
+            buttonHint.SetActive(false);
+        });
     }
 
-   
 
-    private void FlipLeft()
+
+    public void FlipLeft()
     {
         if (leftPage != null)
         {
@@ -161,7 +174,7 @@ public class JournalManager : MonoBehaviour
         }
     }
 
-    private void FlipRight()
+    public void FlipRight()
     {
        if(rightPage != null)
        {

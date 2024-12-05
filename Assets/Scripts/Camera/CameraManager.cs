@@ -8,9 +8,10 @@ using System.Net;
 
 public class CameraManager : MonoBehaviour
 {
+    public static CameraManager Instance;
     public CinemachineVirtualCamera virtualCamera; 
     [Header("Player")]
-    private CharacterStateManager player;
+    [HideInInspector]public CharacterStateManager player;
 
     [Header("Lock On")]
     [SerializeField] private float lockOnDetectionDistance = 20;
@@ -26,12 +27,27 @@ public class CameraManager : MonoBehaviour
     [Header("Lock On Target Info")]
     [HideInInspector] public List<CharacterStateManager> availableTargets = new List<CharacterStateManager>();
     [HideInInspector] public CharacterStateManager nearestLockOnTarget, rightLockOnTarget, leftLockOnTarget, downLockOnTarget, upLockOnTarget;
-    private void Start()
+    private void Awake()
     {
-        player = FindObjectOfType<PlayerMovement>().GetComponent<CharacterStateManager>();
+        if(Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(transform.parent.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
+        }
         pivot = transform.parent.transform;
         standardRotation = pivot.rotation;
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
+    }
+    public void SetPlayer(CharacterStateManager player)
+    {
+        this.player = player;
+
         virtualCamera.Follow = player.cameraLock;
     }
     private void Update()

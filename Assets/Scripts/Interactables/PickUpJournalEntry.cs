@@ -9,6 +9,13 @@ public class PickUpJournalEntry : MonoBehaviour, IInteractable
     public JournalPage journalPage;
 
     public bool isWeapon;
+    private bool _interacted;
+
+    public bool interacted
+    {
+        get => _interacted;
+        set => _interacted = value;
+    }
     private void Awake()
     {
         journalManager = FindObjectOfType<JournalManager>();
@@ -17,7 +24,7 @@ public class PickUpJournalEntry : MonoBehaviour, IInteractable
     {
         if (isWeapon)
         {
-            anim.characterCombatManager.stateManager.hasWeapon = true;
+            anim.characterCombatManager.stateManager.playerState.hasWeapon = true;
             anim.characterCombatManager.stateManager.GiveWeapon();
         }
         anim.PlayTargetAnimation(pickupAction, true);

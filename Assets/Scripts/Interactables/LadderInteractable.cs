@@ -14,6 +14,13 @@ public class LadderInteractable : MonoBehaviour, IInteractable
     private GameObject player;
     public float threshold = 0.15f;
     public ActionContainer climbAction;
+    private bool _interacted;
+
+    public bool interacted
+    {
+        get => _interacted;
+        set => _interacted = value;
+    }
     public void Interact(CharacterAnimatorManager anim)
     {
        

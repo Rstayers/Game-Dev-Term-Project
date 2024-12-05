@@ -7,16 +7,16 @@ public static class Helpers
 {
     
 
-    public static Vector3 GetCameraForward(Camera playerCamera)
+    public static Vector3 GetCameraForward(Transform playerCamera)
     {
-        Vector3 forward = playerCamera.transform.forward;
+        Vector3 forward = playerCamera.forward;
         forward.y = 0;
         return forward.normalized;
     }
 
-    public static Vector3 GetCameraRight(Camera playerCamera)
+    public static Vector3 GetCameraRight(Transform playerCamera)
     {
-        Vector3 right = playerCamera.transform.right;
+        Vector3 right = playerCamera.right;
         right.y = 0;
         return right.normalized;
     }

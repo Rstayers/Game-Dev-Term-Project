@@ -7,6 +7,7 @@ using DG.Tweening;
 interface IInteractable
 {
     public void Interact(CharacterAnimatorManager anim);
+    bool interacted { get; set; }   
 }
 public class PlayerInteraction : MonoBehaviour
 {
@@ -42,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (hit.TryGetComponent(out IInteractable interact))
         {
-            
+            if (interact.interacted) return;
             interact.Interact(playerAnimator);
         }
         

@@ -1,8 +1,7 @@
+using Cinemachine;
+using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Xml;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     
     [Header("Camera")]
-    private Camera camera;
+    private CinemachineVirtualCamera camera;
 
     [Header("Grounding Info")]
     [SerializeField] private Transform grounding;
@@ -33,15 +32,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 rollStartPosition;
     private Vector3 rollTargetPosition;
     private float rollTime;
-
+    [Header("SFX")]
+    [SerializeField] private AudioClip rollSFX;
     
 
-    private void Awake()
+    private void OnEnable ()
     {
         rb = GetComponent<Rigidbody>();
         characterStateManager = GetComponent<CharacterStateManager>();
         animatorManager = GetComponent<CharacterAnimatorManager>();
-        camera = Camera.main;
+        camera = CameraManager.Instance.virtualCamera;
         animatorManager.Initialize();
     }
 
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         if (!ctx.performed || isDodging || characterStateManager.canInteract) return;
 
         // Calculate the direction the player will roll
-        rollDirection = input.x * Helpers.GetCameraRight(camera) + input.y * Helpers.GetCameraForward(camera);
+        rollDirection = input.x * Helpers.GetCameraRight(camera.transform) + input.y * Helpers.GetCameraForward(camera.transform);
         rollDirection = rollDirection.normalized;
         if (rollDirection == Vector3.zero)
             rollDirection = transform.forward;
@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
         //animate and VFX
         animatorManager.PlayTargetAnimation(dodgeAction, true, 0);
+        SFXManager.instance.PlaySFXClip(rollSFX, transform, .2f);
 
         // Instantiate the particle effect at the given position and with no rotation
         GameObject particleInstance = Instantiate(settings.dodgeVFX, transform.position, Quaternion.identity);
@@ -156,6 +157,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleRotation()
     {
+
         /*
          * Update player rotation based on whether we are locked onto a target
          */
@@ -171,8 +173,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             if (input == Vector3.zero) { lookDirection = Vector3.zero; return; }
-            lookDirection += input.x * Helpers.GetCameraRight(camera);
-            lookDirection += input.y * Helpers.GetCameraForward(camera);
+            lookDirection += input.x * Helpers.GetCameraRight(camera.transform);
+            lookDirection += input.y * Helpers.GetCameraForward(camera.transform);
 
 
             Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
@@ -197,10 +199,11 @@ public class PlayerMovement : MonoBehaviour
     }
    private void HandleMovement()
     {
+        
         if (characterStateManager.isClimbing) return;
 
         // Calculate the direction the player is trying to move
-        Vector3 moveDirection = input.x * Helpers.GetCameraRight(camera) + input.y * Helpers.GetCameraForward(camera);
+        Vector3 moveDirection = input.x * Helpers.GetCameraRight(camera.transform) + input.y * Helpers.GetCameraForward(camera.transform);
  
         // Normalize the moveDirection to get a unit vector
         moveDirection = moveDirection.normalized;
@@ -291,6 +294,8 @@ public class PlayerMovement : MonoBehaviour
        
 
     }
+
+   
     #endregion
 
     #region Helpers

@@ -25,6 +25,10 @@ MonoBehaviour:
   - __PanelContainer__rootVisualContainer__d78e975f3245a9a46ad38117c3f38091__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedSelection
   - __PanelContainer__rootVisualContainer__2bdd7a2718ea3444684c31735c260c82__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedViewTransform
   - __PanelContainer__rootVisualContainer__2bdd7a2718ea3444684c31735c260c82__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedSelection
+  - __PanelContainer__rootVisualContainer__29315c7de6f965844a13ed180820ad24__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedViewTransform
+  - __PanelContainer__rootVisualContainer__29315c7de6f965844a13ed180820ad24__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedSelection
+  - __PanelContainer__rootVisualContainer__5963bf919df8fa44e8d3678e4f449f54__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedViewTransform
+  - __PanelContainer__rootVisualContainer__5963bf919df8fa44e8d3678e4f449f54__MaterialGraphView__UnityEditor.Experimental.GraphView.GraphView+PersistedSelection
   m_Values:
   - '{}'
   - '{}'
@@ -32,9 +36,13 @@ MonoBehaviour:
   - '{}'
   - '{}'
   - '{}'
-  - '{"position":{"x":590.6666870117188,"y":182.6666717529297,"z":0.0},"scale":{"x":0.4731457829475403,"y":0.4731457829475403,"z":1.0}}'
+  - '{}'
+  - '{}'
+  - '{}'
+  - '{}'
+  - '{}'
+  - '{}'
+  - '{"position":{"x":879.0,"y":283.0,"z":0.0},"scale":{"x":0.26113247871398928,"y":0.26113247871398928,"z":1.0}}'
   - '{"m_Version":0,"m_SelectedElementsArray":[]}'
-  - '{}'
-  - '{}'
   - '{}'
   - '{}'

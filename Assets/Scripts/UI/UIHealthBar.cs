@@ -15,7 +15,16 @@ public class UIHealthBar : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        instance = this;
+        if(instance == null)
+        { 
+            instance = this;
+
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         hearts = new List<GameObject>();
     }
     public void SetUpHearts(int heartsInitial)
@@ -56,7 +65,10 @@ public class UIHealthBar : MonoBehaviour
         }
         currentContainer.SetHeart (currentHearts);
     }
-
+    public void FillHearts()
+    {
+        SetCurrentHealth(totalHearts);
+    }
     public void RemoveHearts(float healthDown)
     {
         currentHearts -= healthDown;

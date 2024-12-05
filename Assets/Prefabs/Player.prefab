@@ -2192,6 +2192,7 @@ MonoBehaviour:
   grounding: {fileID: 7546697216287412313}
   stepRayLength: 0.75
   dodgeAction: {fileID: 11400000, guid: 654fc64a8f4d6364fbef810126894348, type: 2}
+  rollSFX: {fileID: 8300000, guid: 4774f7cc85732ca43b8d3ee7b1ee039c, type: 3}
 --- !u!136 &3627473163626668745
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2259,9 +2260,12 @@ MonoBehaviour:
   lastAttackPerformed: {fileID: 0}
   meleeAttackPoint: {fileID: 8639204521618847242}
   meleeAttackRadius: 0.79
-  waitFrames: 5
+  waitFrames: 6
   canCombo: 0
   inFiringMode: 0
+  attack01SFX: {fileID: 8300000, guid: 89585554c2857e44c971f3c312255745, type: 3}
+  attack02SFX: {fileID: 8300000, guid: 9ff15f8c2cc13e548b1860376d0a2be7, type: 3}
+  enemyHitSFX: {fileID: 8300000, guid: e9b5ebeea6c744f498271c7db8048c30, type: 3}
 --- !u!114 &8282656588947725143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2278,8 +2282,8 @@ MonoBehaviour:
   combatManager: {fileID: 0}
   stats: {fileID: 11400000, guid: d5bddf7f9c140124b9ebe6e45f294a42, type: 2}
   currentHealth: 0
-  currentStamina: 0
   currentMana: 0
+  playerState: {fileID: 11400000, guid: 72eadcb857bc9ba4cb46e9352608e07d, type: 2}
   isPlayer: 1
   isPerformingAction: 0
   isClimbing: 0
@@ -2288,7 +2292,6 @@ MonoBehaviour:
   isLockedOn: 0
   isDead: 0
   canInteract: 0
-  hasWeapon: 0
   die: {fileID: 11400000, guid: 8f8122a0a710d0f47be8b97634ba73a2, type: 2}
   takeDamage: {fileID: 11400000, guid: 9fa00b7debda4534aba5c0112841b6a7, type: 2}
   healthBar: {fileID: 0}
